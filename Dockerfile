@@ -7,7 +7,7 @@ ARG OPENJDK_VERSION
 #https://github.com/nodesource/distributions/blob/master/README.md
 ARG NODEJS_VERSION=20
 #https://gradle.org/releases/
-ARG GRADLE_VERSION=7.6.3
+ARG GRADLE_VERSION=8.7
 #https://www.npmjs.com/package/cordova?activeTab=versions
 ARG CORDOVA_VERSION=12.0.0
 #https://developer.android.com/studio#command-tools
@@ -35,9 +35,9 @@ RUN npm config set strict-ssl false
 RUN npm i -g cordova@12.0.0
 
 # Gradle
-RUN curl -so /tmp/gradle-7.6.3-bin.zip https://downloads.gradle.org/distributions/gradle-7.6.3-bin.zip && \
-    unzip -qd /opt /tmp/gradle-7.6.3-bin.zip && \
-    ln -s /opt/gradle-7.6.3 /opt/gradle
+RUN curl -so /tmp/gradle-8.7-bin.zip https://downloads.gradle.org/distributions/gradle-8.7-bin.zip && \
+    unzip -qd /opt /tmp/gradle-8.7-bin.zip && \
+    ln -s /opt/gradle-8.7 /opt/gradle
 
 # Android
 RUN curl -so /tmp/commandlinetools-linux-${ANDROID_CMDTOOLS_VERSION}_latest.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_CMDTOOLS_VERSION}_latest.zip && \
