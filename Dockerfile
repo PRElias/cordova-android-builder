@@ -1,6 +1,6 @@
 #https://hub.docker.com/_/openjdk
-ARG OPENJDK_VERSION=11
-FROM openjdk:${OPENJDK_VERSION}
+#ARG OPENJDK_VERSION=17
+FROM eclipse-temurin:21
 
 # Reference default value
 ARG OPENJDK_VERSION
@@ -18,24 +18,26 @@ LABEL maintainer="Hamdi Fourati <contact@hamdifourati.info>"
 
 WORKDIR /opt/src
 
-ENV JAVA_HOME /usr/local/openjdk-${OPENJDK_VERSION}/
+ENV JAVA_HOME=/opt/java/openjdk
 ENV ANDROID_SDK_ROOT /usr/local/android-sdk-linux
 ENV ANDROID_HOME $ANDROID_SDK_ROOT
 ENV GRADLE_USER_HOME /opt/gradle
 ENV PATH $PATH:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$GRADLE_USER_HOME/bin
 
 # NodeJS
-RUN echo https://deb.nodesource.com/setup_${NODEJS_VERSION}.x
-RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash -
+RUN echo https://deb.nodesource.com/setup_20.x
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt -qq install -y nodejs
+RUN apt -qq install -y unzip
 
 # Cordova
-RUN npm i -g cordova@${CORDOVA_VERSION}
+RUN npm config set strict-ssl false
+RUN npm i -g cordova@12.0.0
 
 # Gradle
-RUN curl -so /tmp/gradle-${GRADLE_VERSION}-bin.zip https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
-    unzip -qd /opt /tmp/gradle-${GRADLE_VERSION}-bin.zip && \
-    ln -s /opt/gradle-${GRADLE_VERSION} /opt/gradle
+RUN curl -so /tmp/gradle-7.6.3-bin.zip https://downloads.gradle.org/distributions/gradle-7.6.3-bin.zip && \
+    unzip -qd /opt /tmp/gradle-7.6.3-bin.zip && \
+    ln -s /opt/gradle-7.6.3 /opt/gradle
 
 # Android
 RUN curl -so /tmp/commandlinetools-linux-${ANDROID_CMDTOOLS_VERSION}_latest.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_CMDTOOLS_VERSION}_latest.zip && \
